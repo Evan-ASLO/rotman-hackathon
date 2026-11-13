@@ -1,0 +1,130 @@
+<!doctype html>
+<!--
+THESIS: A sponsorship-first event proposal that brings three Rotman Commerce groups together.
+OWN-WORLD: Warm Clawpilot neutrals, rose accent, oversized Segoe UI type, open sections and thin rules.
+STORY: Understand the proposal, meet its organizers, explore sponsorship and download the draft.
+FIRST VIEWPORT: Large event title at left, proposal action and three-logo convergence below.
+FORM: User-pinned event-page reference; no invented event metrics or confirmed partnerships.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A draft Rotman Commerce hackathon proposal from RCVC, RCIG and RCEO. Explore the concept and prospective sponsorship opportunities.">
+  <title>Rotman Hackathon — Sponsorship proposal</title>
+  <script>
+    (() => {
+      const param = new URLSearchParams(window.location.search).get("scoutTheme");
+      const theme = param === "light" || param === "dark" ? param :
+        (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+  <link rel="icon" href="assets/rcvc.png" type="image/png">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header wrap">
+    <a class="wordmark" href="#top" aria-label="Rotman hackathon proposal, back to top">ROT<span class="wordmark-accent">/</span>MAN<span class="wordmark-caption">HACKATHON PROPOSAL</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="navigation" hidden>Menu <span aria-hidden="true">+</span></button>
+    <nav id="navigation" aria-label="Main navigation">
+      <a href="#concept">The concept</a>
+      <a href="#organizers">Organizers</a>
+      <a href="#faq">FAQ</a>
+      <a class="nav-cta" href="#sponsorship">Explore sponsorship <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+  <main id="main">
+    <section class="hero wrap" id="top" aria-labelledby="hero-title">
+      <h1 id="hero-title">Rotman<br><span>Hackathon.</span></h1>
+      <div class="hero-bottom">
+        <div class="hero-copy">
+          <p class="intro">Three groups. One shared starting point.</p>
+          <p class="placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <a class="button" href="#sponsorship">Explore the proposal <span aria-hidden="true">↗</span></a>
+          <p class="micro">Prepared for Dragonfruit Ventures &amp; potential sponsors.<br>A draft proposal. Dragonfruit is a prospective partner.</p>
+        </div>
+        <div class="coalition-stage" aria-label="RCVC, RCIG and RCEO come together for the proposed hackathon">
+          <div class="coalition-track" aria-hidden="true">
+            <div class="identity identity-one"><img src="assets/rcvc.png" alt="" width="76" height="76"><span>RCVC</span></div>
+            <div class="identity identity-two"><img src="assets/rcig.png" alt="" width="76" height="76"><span>RCIG</span></div>
+            <div class="identity identity-three"><img src="assets/rceo.png" alt="" width="76" height="76"><span>RCEO</span></div>
+          </div>
+          <div class="coalition-result"><strong>Better,<br>together.</strong><span class="coalition-caption">Venture. Innovation. Entrepreneurship.</span></div>
+          <button class="replay" type="button" hidden>Replay convergence <span aria-hidden="true">↺</span></button>
+        </div>
+      </div>
+    </section>
+    <section class="facts wrap" aria-labelledby="facts-title">
+      <h2 class="visually-hidden" id="facts-title">Event at a glance</h2>
+      <div><span class="micro">STATUS</span><strong>Proposal stage</strong></div>
+      <div><span class="micro">WHEN</span><strong>To be confirmed</strong></div>
+      <div><span class="micro">WHERE</span><strong>To be confirmed</strong></div>
+      <div><span class="micro">FORMAT &amp; CAPACITY</span><strong>To be confirmed</strong></div>
+    </section>
+    <section class="section wrap split" id="concept" aria-labelledby="concept-title">
+      <div><h2 id="concept-title">An idea worth<br>building around.</h2></div>
+      <div class="section-copy"><p class="lead placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p><p class="placeholder">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><p class="draft-note">Draft concept. The challenge, eligibility and event format have not been finalized.</p></div>
+    </section>
+    <section class="section organizers-section" id="organizers" aria-labelledby="organizers-title">
+      <div class="wrap">
+        <div class="section-heading"><h2 id="organizers-title">Three perspectives.<br>One collaboration.</h2><p class="micro">THE GROUPS BEHIND THE PROPOSAL</p></div>
+        <div class="organizers">
+          <article class="organizer"><div class="logo-holder"><img src="assets/rcvc.png" alt="RCVC gold unicorn logo" width="128" height="128" loading="lazy"></div><h3><span class="club-short">RCVC</span>Rotman Commerce<br>Venture Capital Group</h3><p class="placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p></article>
+          <article class="organizer"><div class="logo-holder"><img src="assets/rcig.png" alt="RCIG arrows logo" width="128" height="128" loading="lazy"></div><h3><span class="club-short">RCIG</span>Rotman Commerce<br>Innovation Group</h3><p class="placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p></article>
+          <article class="organizer"><div class="logo-holder"><img src="assets/rceo.png" alt="RCEO lightbulb logo" width="128" height="128" loading="lazy"></div><h3><span class="club-short">RCEO</span>Rotman Commerce<br>Entrepreneurship Organization</h3><p class="placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p></article>
+        </div>
+      </div>
+    </section>
+    <section class="section wrap" id="how-it-works" aria-labelledby="works-title">
+      <h2 id="works-title">From a blank page<br>to a pitch.</h2>
+      <div class="steps">
+        <article><span class="step-number">01</span><h3>Find the challenge.</h3><p class="placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam.</p></article>
+        <article><span class="step-number">02</span><h3>Build the idea.</h3><p class="placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam.</p></article>
+        <article><span class="step-number">03</span><h3>Make the pitch.</h3><p class="placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam.</p></article>
+      </div><p class="draft-note">Illustrative sequence only. Activities and judging criteria are to be confirmed.</p>
+    </section>
+    <section class="section sponsorship-section" id="sponsorship" aria-labelledby="sponsor-title">
+      <div class="wrap">
+        <div class="split"><h2 id="sponsor-title">Help shape<br>what comes next.</h2><div class="section-copy"><p class="lead placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p><p class="prospective-label">Dragonfruit Ventures <span>Prospective partner</span></p><p class="draft-note">Draft proposal for discussion; sponsorship contributions and benefits remain unconfirmed.</p></div></div>
+        <div class="opportunities">
+          <article><h3>Event support</h3><p class="placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis nostrud exercitation ullamco laboris.</p><span class="micro">SCOPE &amp; CONTRIBUTION: TBD</span></article>
+          <article><h3>Challenge collaboration</h3><p class="placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis nostrud exercitation ullamco laboris.</p><span class="micro">FORMAT &amp; INVOLVEMENT: TBD</span></article>
+          <article><h3>In-kind support</h3><p class="placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis nostrud exercitation ullamco laboris.</p><span class="micro">RESOURCES &amp; BENEFITS: TBD</span></article>
+        </div>
+        <a class="button" href="proposal.txt" download="rotman-hackathon-draft-proposal.txt">Download draft outline <span aria-hidden="true">↓</span></a><p class="micro download-note">TEXT FILE · PLACEHOLDER OUTLINE · NOT A FINAL SPONSORSHIP PACKAGE</p>
+      </div>
+    </section>
+    <section class="section wrap split" id="schedule" aria-labelledby="schedule-title">
+      <div><h2 id="schedule-title">The day,<br>in draft.</h2><p class="draft-note">Date and times to be confirmed.<br>All phases are illustrative placeholders.</p></div>
+      <ol class="schedule">
+        <li><span class="micro">TIME TBD</span><div><h3>Welcome &amp; challenge</h3><p class="placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></div></li>
+        <li><span class="micro">TIME TBD</span><div><h3>Build &amp; collaborate</h3><p class="placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></div></li>
+        <li><span class="micro">TIME TBD</span><div><h3>Pitches &amp; review</h3><p class="placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></div></li>
+        <li><span class="micro">TIME TBD</span><div><h3>Closing</h3><p class="placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></div></li>
+      </ol>
+    </section>
+    <section class="logistics wrap" aria-label="Prizes and venue">
+      <article><h2>Room for possibility.</h2><p class="placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p><p class="draft-note">Prizes, judging and award structure: to be confirmed.</p></article>
+      <article><h2>A place to build.</h2><p class="placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p><p class="draft-note">Location, accessibility and facilities: to be confirmed.</p></article>
+    </section>
+    <section class="section wrap split" id="faq" aria-labelledby="faq-title">
+      <div><h2 id="faq-title">Glad you asked.</h2><p class="draft-note">The essentials, with room for the details.</p></div>
+      <div class="faq-list">
+        <details><summary>Is the hackathon confirmed?<span aria-hidden="true">+</span></summary><div class="faq-answer"><p>No. This website is a draft sponsorship proposal, not an event announcement. Dates, venue, format and participation details are to be confirmed.</p></div></details>
+        <details><summary>Who is behind the proposal?<span aria-hidden="true">+</span></summary><div class="faq-answer"><p>Rotman Commerce Venture Capital Group (RCVC), Rotman Commerce Innovation Group (RCIG), and Rotman Commerce Entrepreneurship Organization (RCEO).</p></div></details>
+        <details><summary>Is Dragonfruit Ventures a sponsor?<span aria-hidden="true">+</span></summary><div class="faq-answer"><p>Dragonfruit Ventures is a prospective partner. No sponsorship or partnership has been confirmed.</p></div></details>
+        <details><summary>Who can participate?<span aria-hidden="true">+</span></summary><div class="faq-answer"><p class="placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam.</p><p class="draft-note">Eligibility, team size and registration: to be confirmed. Registration is not open.</p></div></details>
+        <details><summary>What would sponsorship involve?<span aria-hidden="true">+</span></summary><div class="faq-answer"><p class="placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam.</p><p class="draft-note">Contributions, benefits and commitments will be defined in the final proposal.</p><a href="#sponsorship">See the draft opportunities <span aria-hidden="true">↗</span></a></div></details>
+        <details><summary>How can we discuss the proposal?<span aria-hidden="true">+</span></summary><div class="faq-answer"><p>Use the person who shared this proposal as your current point of contact. A dedicated organizer contact has not yet been published.</p><a href="proposal.txt" download>Download the draft outline <span aria-hidden="true">↓</span></a></div></details>
+      </div>
+    </section>
+    <section class="closing wrap" aria-labelledby="closing-title">
+      <h2 id="closing-title">Let's build<br>the starting point.</h2><div class="closing-bottom"><a class="button" href="#sponsorship">Review sponsorship details <span aria-hidden="true">↗</span></a><p class="micro">CONTACT THE PERSON WHO SHARED THIS PROPOSAL.<br>ORGANIZER CONTACT DETAILS: TO BE CONFIRMED.</p></div>
+    </section>
+  </main>
+  <footer class="wrap footer"><span>RCVC / RCIG / RCEO</span><span class="micro">DRAFT PROPOSAL · UNCONFIRMED DETAILS ARE PLACEHOLDERS</span><a href="#top">Back to top <span aria-hidden="true">↑</span></a></footer>
+</body>
+</html>
