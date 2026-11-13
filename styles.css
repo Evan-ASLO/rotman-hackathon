@@ -90,11 +90,21 @@ p { line-height: 1.7; }
 .button span { font-size: 20px; }
 .hero-copy > .micro { letter-spacing: 0; font-size: 12px; margin: 20px 0 0; }
 .coalition-stage { border-left: 1px solid var(--cp-border); padding: 16px 0 12px 48px; min-width: 0; }
-.coalition-track { display: flex; gap: 12px; align-items: flex-start; position: relative; padding-bottom: 24px; border-bottom: 1px solid var(--cp-border); }
+.coalition-art { position: relative; height: 160px; isolation: isolate; }
+.coalition-map { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.coalition-route, .coalition-signal { fill: none; stroke-width: 1.25; vector-effect: non-scaling-stroke; }
+.coalition-route { stroke: var(--cp-border-strong); }
+.coalition-signal { stroke: var(--cp-accent); opacity: 0; }
+.coalition-junction { fill: var(--cp-accent); }
+.coalition-pulse { fill: none; stroke: var(--cp-accent); stroke-width: 1; vector-effect: non-scaling-stroke; opacity: .3; transform-box: fill-box; transform-origin: center; }
+.coalition-emblem { position: absolute; top: 22.1053%; width: 64px; height: 64px; object-fit: contain; border-radius: .625rem; transform: translate(-50%, -50%); }
+.emblem-rcvc { left: 16.6667%; }
+.emblem-rcig { left: 50%; }
+.emblem-rceo { left: 83.3333%; }
+.coalition-track { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; position: relative; padding-bottom: 24px; border-bottom: 1px solid var(--cp-border); }
 .identity { display: flex; flex-direction: column; align-items: center; gap: 12px; flex: 1; min-width: 0; text-align: center; font-size: 14px; font-weight: 650; }
-.identity img { width: 64px; height: 64px; object-fit: contain; border-radius: .625rem; }
 .identity-label { display: block; width: 100%; }
-.identity-name { display: block; font-size: 12px; line-height: 1.5; font-weight: 400; color: var(--cp-text-muted); margin-top: 8px; overflow-wrap: anywhere; }
+.identity-name { display: block; font-size: 12px; line-height: 1.5; font-weight: 400; color: var(--cp-text-muted); margin-top: 8px; padding-inline: 6px; overflow-wrap: anywhere; }
 .coalition-result { margin-top: 24px; }
 .coalition-result strong { display: block; font-size: clamp(44px, 4.6vw, 64px); line-height: 1; letter-spacing: -.04em; margin: 12px 0; }
 .coalition-caption { font-size: 14px; color: var(--cp-text-muted); }
@@ -186,9 +196,9 @@ details[open] summary > span { transform: rotate(45deg); }
   .hero-copy { max-width: none; }
   .intro { font-size: 21px; }
   .coalition-stage { border-left: 0; border-top: 1px solid var(--cp-border); padding: 24px 0 0; }
-  .coalition-track { gap: 16px; }
+  .coalition-art { height: 148px; }
   .identity { flex-direction: column; justify-content: flex-start; gap: 8px; }
-  .identity img { width: 56px; height: 56px; }
+  .coalition-emblem { width: 56px; height: 56px; }
   .identity-name { font-size: 11px; }
   .coalition-result strong { font-size: 48px; }
   .button { max-width: 100%; gap: 24px; }

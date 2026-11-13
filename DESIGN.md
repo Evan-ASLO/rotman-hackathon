@@ -16,7 +16,9 @@ Desktop: text wordmark and horizontal navigation, large two-line title, sponsors
 
 ## Motion and accessibility
 
-One bounded JavaScript convergence sequence brings the club identities together. Replay is explicit, FAQ feedback is short, and reduced-motion preference disables nonessential animation. Default HTML stays visible and useful without JavaScript. Use semantic landmarks, native details/summary FAQs, visible focus and genuine links.
+The user selected the cinematic coalition direction: three SVG routes connect the original logos to one junction. A bounded Web Animations API sequence moves the logos inward along the drawn paths, then returns them to their corresponding name columns. The names remain stationary and readable. Route tracing and one junction pulse support that same focal moment rather than adding competing effects.
+
+The sequence plays once when visible. Replay is explicit; off-screen, hidden-tab, resize and reduced-motion states cancel playback to the static layout. FAQ feedback stays short. Default HTML remains useful without JavaScript, and unsupported animation APIs use the static composition. Use semantic landmarks, native details/summary FAQs, visible focus and genuine links.
 
 ## Content integrity
 
