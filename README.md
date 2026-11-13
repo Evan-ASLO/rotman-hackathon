@@ -19,7 +19,7 @@ Open `http://127.0.0.1:4173`. The page also works directly from `index.html`, bu
 - `index.html`: headings, sections, FAQ, proposal status and CTA anchors.
 - `styles.css`: responsive layout and Clawpilot light/dark theme tokens. Component colors use `var(--cp-*)`.
 - `script.js`: mobile navigation, bounded organizer convergence and FAQ feedback.
-- `assets/rcvc.png`, `assets/rcig.png`, `assets/rceo.png`: supplied organizer logos in that exact mapping, preserved without stretching.
+- `assets/rcvc.png`, `assets/rcig.png`, `assets/rceo.png`: latest supplied organizer logos in that exact mapping: black unicorn, charcoal/yellow arrows, and black lightbulb. Preserve their colors and proportions. Each acronym displays its full club name beneath it in parentheses.
 - `proposal.txt`: downloadable draft outline. Update alongside the website when facts are confirmed.
 
 Do not replace placeholders with speculative facts. Keep Dragonfruit labelled prospective until confirmed. Publish a verified organizer contact before adding a contact form or email CTA.

@@ -20,4 +20,4 @@ One bounded JavaScript convergence sequence brings the club identities together.
 
 ## Content integrity
 
-RCVC = unicorn; RCIG = arrows; RCEO = lightbulb. Dragonfruit Ventures remains a prospective partner. Lorem Ipsum and explicit unconfirmed labels stand in for event details. The draft download is real; no contact or registration submission is simulated.
+RCVC = latest supplied black unicorn; RCIG = latest supplied charcoal/yellow arrows; RCEO = latest supplied black lightbulb. Display each standalone club acronym above its parenthesized full name. Dragonfruit Ventures remains a prospective partner. Lorem Ipsum and explicit unconfirmed labels stand in for event details. The draft download is real; no contact or registration submission is simulated.

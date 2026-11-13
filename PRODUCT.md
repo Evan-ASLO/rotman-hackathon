@@ -22,9 +22,10 @@ Unconfirmed descriptions use standard Lorem Ipsum. Date, venue, attendance, form
 
 ## Brand Commitments
 
-- Rotman Commerce Venture Capital Group (RCVC): unicorn image.
-- Rotman Commerce Innovation Group (RCIG): arrows image.
-- Rotman Commerce Entrepreneurship Organization (RCEO): lightbulb image.
+- Rotman Commerce Venture Capital Group (RCVC): latest supplied black unicorn image.
+- Rotman Commerce Innovation Group (RCIG): latest supplied charcoal/yellow arrows image.
+- Rotman Commerce Entrepreneurship Organization (RCEO): latest supplied black lightbulb image.
+- Display full club names in parentheses beneath the standalone acronyms.
 - Reference: https://events.cantutor.ai/ with airy sections, large bold sans typography, warm neutral ground, accent CTAs and thin borders.
 - Clawpilot theme variables and Segoe UI/Aptos typography.
 

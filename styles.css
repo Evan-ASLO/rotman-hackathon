@@ -90,9 +90,11 @@ p { line-height: 1.7; }
 .button span { font-size: 20px; }
 .hero-copy > .micro { letter-spacing: 0; font-size: 12px; margin: 20px 0 0; }
 .coalition-stage { border-left: 1px solid var(--cp-border); padding: 16px 0 12px 48px; min-width: 0; }
-.coalition-track { display: flex; gap: 12px; align-items: center; position: relative; padding-bottom: 24px; border-bottom: 1px solid var(--cp-border); }
-.identity { display: flex; align-items: center; gap: 10px; flex: 1; font: 12px Consolas, "Courier New", Courier, monospace; }
-.identity img { width: 48px; height: 48px; object-fit: contain; border-radius: .625rem; }
+.coalition-track { display: flex; gap: 12px; align-items: flex-start; position: relative; padding-bottom: 24px; border-bottom: 1px solid var(--cp-border); }
+.identity { display: flex; flex-direction: column; align-items: center; gap: 12px; flex: 1; min-width: 0; text-align: center; font-size: 14px; font-weight: 650; }
+.identity img { width: 64px; height: 64px; object-fit: contain; border-radius: .625rem; }
+.identity-label { display: block; width: 100%; }
+.identity-name { display: block; font-size: 12px; line-height: 1.5; font-weight: 400; color: var(--cp-text-muted); margin-top: 8px; overflow-wrap: anywhere; }
 .coalition-result { margin-top: 24px; }
 .coalition-result strong { display: block; font-size: clamp(44px, 4.6vw, 64px); line-height: 1; letter-spacing: -.04em; margin: 12px 0; }
 .coalition-caption { font-size: 14px; color: var(--cp-text-muted); }
@@ -115,7 +117,8 @@ h3 { font-size: 23px; line-height: 1.25; letter-spacing: -.02em; margin: 0 0 16p
 .organizer { border-top: 1px solid var(--cp-border); padding-top: 32px; }
 .logo-holder { height: 136px; display: flex; align-items: start; margin-bottom: 24px; }
 .logo-holder img { width: 128px; height: 128px; object-fit: contain; border-radius: .625rem; }
-.club-short { display: block; color: var(--cp-accent); font-size: 16px; margin-bottom: 12px; }
+.club-short { display: block; color: var(--cp-accent); font-size: 24px; margin-bottom: 8px; }
+.club-name { display: block; font-size: 18px; line-height: 1.4; }
 .organizer h3 { font-size: 21px; }
 .organizer p.placeholder { margin-bottom: 0; font-size: 15px; max-width: 320px; }
 .steps { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 56px; gap: 40px; }
@@ -184,8 +187,9 @@ details[open] summary > span { transform: rotate(45deg); }
   .intro { font-size: 21px; }
   .coalition-stage { border-left: 0; border-top: 1px solid var(--cp-border); padding: 24px 0 0; }
   .coalition-track { gap: 16px; }
-  .identity { flex-direction: row; justify-content: center; gap: 6px; }
-  .identity img { width: 40px; height: 40px; }
+  .identity { flex-direction: column; justify-content: flex-start; gap: 8px; }
+  .identity img { width: 56px; height: 56px; }
+  .identity-name { font-size: 11px; }
   .coalition-result strong { font-size: 48px; }
   .button { max-width: 100%; gap: 24px; }
   .facts { grid-template-columns: 1fr 1fr; gap: 24px 16px; }
