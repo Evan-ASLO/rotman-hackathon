@@ -3,7 +3,7 @@
 THESIS: A sponsorship-first event proposal that brings three Rotman Commerce groups together.
 OWN-WORLD: Warm Clawpilot neutrals, rose accent, oversized Segoe UI type, open sections and thin rules.
 STORY: Understand the proposal, meet its organizers, explore sponsorship and download the draft.
-FIRST VIEWPORT: Large event title at left, proposal action and a three-path coalition sequence below.
+FIRST VIEWPORT: Large event title, supplied club marks and the sponsorship proposal action.
 FORM: User-pinned event-page reference; no invented event metrics or confirmed partnerships.
 -->
 <html lang="en" data-theme="light">
@@ -30,6 +30,11 @@ FORM: User-pinned event-page reference; no invented event metrics or confirmed p
     </nav>
   </header>
   <main id="main">
+    <div class="page-journey" aria-hidden="true" hidden>
+      <img class="journey-mark" data-club="rcvc" src="assets/rcvc.png" alt="" width="128" height="128">
+      <img class="journey-mark" data-club="rcig" src="assets/rcig.png" alt="" width="128" height="128">
+      <img class="journey-mark" data-club="rceo" src="assets/rceo.png" alt="" width="128" height="128">
+    </div>
     <section class="hero" id="top" aria-labelledby="hero-title">
       <div class="hero-media" aria-hidden="true">
         <img class="hero-poster hero-footage" src="assets/hero-background-poster.jpg" alt="" width="960" height="540">
@@ -39,38 +44,20 @@ FORM: User-pinned event-page reference; no invented event metrics or confirmed p
         </video>
       </div>
       <div class="wrap hero-content">
-      <h1 id="hero-title">Rotman<br><span>Hackathon.</span></h1>
+      <div class="hero-heading">
+        <h1 id="hero-title">Rotman<br><span>Hackathon.</span></h1>
+        <div class="hero-clubs" aria-label="Meet the organizing groups">
+          <a class="journey-origin" data-club="rcvc" href="#organizers" aria-label="Meet Rotman Commerce Venture Capital Group"><img src="assets/rcvc.png" alt="" width="84" height="84"></a>
+          <a class="journey-origin" data-club="rcig" href="#organizers" aria-label="Meet Rotman Commerce Innovation Group"><img src="assets/rcig.png" alt="" width="84" height="84"></a>
+          <a class="journey-origin" data-club="rceo" href="#organizers" aria-label="Meet Rotman Commerce Entrepreneurship Organization"><img src="assets/rceo.png" alt="" width="84" height="84"></a>
+        </div>
+      </div>
       <div class="hero-bottom">
         <div class="hero-copy">
           <p class="intro">Three groups. One shared starting point.</p>
           <p class="placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
           <a class="button" href="#sponsorship">Explore the proposal <span aria-hidden="true">↗</span></a>
           <p class="micro">Prepared for Dragonfruit Ventures &amp; potential sponsors.<br>A draft proposal. Dragonfruit is a prospective partner.</p>
-        </div>
-        <div class="coalition-stage" aria-label="RCVC, RCIG and RCEO come together for the proposed hackathon">
-          <div class="coalition-art" aria-hidden="true">
-            <svg class="coalition-map" viewBox="0 0 600 190" preserveAspectRatio="none">
-              <path id="route-rcvc" class="coalition-route" d="M100 42 C100 106 246 86 300 154"></path>
-              <path id="route-rcig" class="coalition-route" d="M300 42 C300 78 300 110 300 154"></path>
-              <path id="route-rceo" class="coalition-route" d="M500 42 C500 106 354 86 300 154"></path>
-              <path class="coalition-signal" data-route="route-rcvc" d="M100 42 C100 106 246 86 300 154"></path>
-              <path class="coalition-signal" data-route="route-rcig" d="M300 42 C300 78 300 110 300 154"></path>
-              <path class="coalition-signal" data-route="route-rceo" d="M500 42 C500 106 354 86 300 154"></path>
-              <circle class="coalition-pulse" cx="300" cy="154" r="16"></circle>
-              <circle class="coalition-junction" cx="300" cy="154" r="5"></circle>
-            </svg>
-            <img class="coalition-emblem emblem-rcvc" data-route="route-rcvc" src="assets/rcvc.png" alt="" width="64" height="64">
-            <img class="coalition-emblem emblem-rcig" data-route="route-rcig" src="assets/rcig.png" alt="" width="64" height="64">
-            <img class="coalition-emblem emblem-rceo" data-route="route-rceo" src="assets/rceo.png" alt="" width="64" height="64">
-          </div>
-          <div class="coalition-track">
-            <div class="identity identity-one"><span class="identity-label">RCVC<span class="identity-name">(Rotman Commerce Venture Capital Group)</span></span></div>
-            <div class="identity identity-two"><span class="identity-label">RCIG<span class="identity-name">(Rotman Commerce Innovation Group)</span></span></div>
-            <div class="identity identity-three"><span class="identity-label">RCEO<span class="identity-name">(Rotman Commerce Entrepreneurship Organization)</span></span></div>
-          </div>
-          <div class="coalition-result"><strong>Better,<br>together.</strong><span class="coalition-caption">Venture. Innovation. Entrepreneurship.</span></div>
-          <p class="coalition-scroll-hint" hidden>Scroll down to converge. Up to separate.</p>
-          <button class="replay" type="button" hidden>Replay convergence <span aria-hidden="true">↺</span></button>
         </div>
       </div>
       <div class="hero-motion-controls">
@@ -79,24 +66,24 @@ FORM: User-pinned event-page reference; no invented event metrics or confirmed p
       </div>
       </div>
     </section>
-    <section class="facts wrap" aria-labelledby="facts-title">
+    <section class="facts wrap journey-section" aria-labelledby="facts-title">
       <h2 class="visually-hidden" id="facts-title">Event at a glance</h2>
       <div><span class="micro">STATUS</span><strong>Proposal stage</strong></div>
       <div><span class="micro">WHEN</span><strong>To be confirmed</strong></div>
       <div><span class="micro">WHERE</span><strong>To be confirmed</strong></div>
       <div><span class="micro">FORMAT &amp; CAPACITY</span><strong>To be confirmed</strong></div>
     </section>
-    <section class="section wrap split" id="concept" aria-labelledby="concept-title">
+    <section class="section wrap split journey-section" id="concept" aria-labelledby="concept-title">
       <div><h2 id="concept-title">An idea worth<br>building around.</h2></div>
       <div class="section-copy"><p class="lead placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p><p class="placeholder">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><p class="draft-note">Draft concept. The challenge, eligibility and event format have not been finalized.</p></div>
     </section>
     <section class="section organizers-section" id="organizers" aria-labelledby="organizers-title">
       <div class="wrap">
-        <div class="section-heading"><h2 id="organizers-title">Three perspectives.<br>One collaboration.</h2><p class="micro">THE GROUPS BEHIND THE PROPOSAL</p></div>
+        <div class="section-heading journey-section"><h2 id="organizers-title">Three perspectives.<br>One collaboration.</h2><p class="micro">THE GROUPS BEHIND THE PROPOSAL</p></div>
         <div class="organizers">
-          <article class="organizer"><div class="logo-holder"><img src="assets/rcvc.png" alt="RCVC black unicorn logo" width="128" height="128" loading="lazy"></div><h3><span class="club-short">RCVC</span><span class="club-name">(Rotman Commerce Venture Capital Group)</span></h3><p class="placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p></article>
-          <article class="organizer"><div class="logo-holder"><img src="assets/rcig.png" alt="RCIG charcoal and yellow arrows logo" width="128" height="128" loading="lazy"></div><h3><span class="club-short">RCIG</span><span class="club-name">(Rotman Commerce Innovation Group)</span></h3><p class="placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p></article>
-          <article class="organizer"><div class="logo-holder"><img src="assets/rceo.png" alt="RCEO black lightbulb and CN Tower logo" width="128" height="128" loading="lazy"></div><h3><span class="club-short">RCEO</span><span class="club-name">(Rotman Commerce Entrepreneurship Organization)</span></h3><p class="placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p></article>
+          <article class="organizer"><div class="logo-holder"><img class="journey-destination" data-club="rcvc" src="assets/rcvc.png" alt="RCVC black unicorn logo" width="128" height="128" loading="lazy"></div><h3><span class="club-short">RCVC</span><span class="club-name">(Rotman Commerce Venture Capital Group)</span></h3><p class="placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p></article>
+          <article class="organizer"><div class="logo-holder"><img class="journey-destination" data-club="rcig" src="assets/rcig.png" alt="RCIG charcoal and yellow arrows logo" width="128" height="128" loading="lazy"></div><h3><span class="club-short">RCIG</span><span class="club-name">(Rotman Commerce Innovation Group)</span></h3><p class="placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p></article>
+          <article class="organizer"><div class="logo-holder"><img class="journey-destination" data-club="rceo" src="assets/rceo.png" alt="RCEO black lightbulb and CN Tower logo" width="128" height="128" loading="lazy"></div><h3><span class="club-short">RCEO</span><span class="club-name">(Rotman Commerce Entrepreneurship Organization)</span></h3><p class="placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p></article>
         </div>
       </div>
     </section>

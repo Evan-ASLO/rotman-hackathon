@@ -4,8 +4,6 @@ const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const menu = document.querySelector(".menu-toggle");
 const navigation = document.querySelector("#navigation");
 const mobileLayout = window.matchMedia("(max-width: 720px)");
-const replay = document.querySelector(".replay");
-const coalitionArt = document.querySelector(".coalition-art");
 let activeAnimations = [];
 
 function trackAnimation(animation) {
@@ -41,131 +39,127 @@ function stopAnimations() {
   activeAnimations = [];
 }
 
-const coalitionHint = document.querySelector(".coalition-scroll-hint");
-const canAnimateCoalition = typeof Element.prototype.animate === "function";
-let coalitionAnimations = [];
-let coalitionFrame = 0;
-let coalitionNeedsLayout = true;
-let coalitionGeometry;
-let coalitionPreview = null;
-let coalitionLastProgress = -1;
+const journey = document.querySelector(".page-journey");
+const journeyMarks = [...journey.querySelectorAll(".journey-mark")];
+const canAnimateJourney = typeof Element.prototype.animate === "function";
+let journeyRoutes = [];
+let journeyFrame = 0;
+let journeyNeedsLayout = true;
 
-function addCoalitionAnimation(element, keyframes) {
-  const animation = element.animate(keyframes, { duration: 1000, fill: "both", easing: "linear" });
-  animation.pause();
-  animation.currentTime = 0;
-  coalitionAnimations.push(animation);
+function pageBox(element) {
+  const rect = element.getBoundingClientRect();
+  return {
+    x: rect.left + window.scrollX, y: rect.top + window.scrollY,
+    width: rect.width, height: rect.height,
+    right: rect.right + window.scrollX, bottom: rect.bottom + window.scrollY
+  };
 }
 
-function measureCoalition() {
-  coalitionAnimations.forEach(animation => animation.cancel());
-  coalitionAnimations = [];
-  coalitionLastProgress = -1;
-  const { top, width, height } = coalitionArt.getBoundingClientRect();
-  const pageTop = top + window.scrollY;
-  const start = Math.max(0, pageTop - window.innerHeight * .75);
-  coalitionGeometry = {
-    top: pageTop, height, start,
-    end: Math.max(start + 160, pageTop - window.innerHeight * .2)
-  };
-  coalitionNeedsLayout = false;
-  if (width === 0 || height === 0) return;
-  const emblems = [...coalitionArt.querySelectorAll(".coalition-emblem")];
-  emblems.forEach(emblem => {
-    const route = document.getElementById(emblem.dataset.route);
-    const length = route.getTotalLength();
-    const start = route.getPointAtLength(0);
-    const keyframes = [];
-    // Sample only on layout changes; scrolling seeks the paused browser animations.
-    for (let step = 0; step <= 32; step++) {
-      const progress = step / 32;
-      const eased = (1 - Math.cos(progress * Math.PI)) / 2;
-      const point = route.getPointAtLength(length * .6 * eased);
-      const dx = (point.x - start.x) * width / 600;
-      const dy = (point.y - start.y) * height / 190;
-      const scale = 1 - .44 * eased;
+function journeyKeyframes(knots, root) {
+  const keyframes = [];
+  const endTime = knots[knots.length - 1].at;
+  for (let segment = 0; segment < knots.length - 1; segment++) {
+    const from = knots[segment], to = knots[segment + 1];
+    for (let step = segment === 0 ? 0 : 1; step <= 12; step++) {
+      const progress = step / 12;
+      // The reading rail tracks scroll linearly; bends ease through the surrounding whitespace.
+      const travel = segment === 4 ? progress : progress * progress * (3 - 2 * progress);
+      let sizing = travel;
+      if (segment === 0) sizing = Math.min(1, travel * 3);
+      if (segment === knots.length - 2) sizing = Math.max(0, (travel - .45) / .55);
+      const size = from.size + (to.size - from.size) * sizing;
+      const x = from.x + (to.x - from.x) * travel - root.x - size / 2;
+      const y = from.y + (to.y - from.y) * travel - root.y - size / 2;
       keyframes.push({
-        offset: progress,
-        transform: `translate(-50%, -50%) translate(${dx}px, ${dy}px) scale(${scale})`
+        offset: (from.at + (to.at - from.at) * progress) / endTime,
+        transform: `translate(${x}px, ${y}px) scale(${size / 128})`
       });
     }
-    addCoalitionAnimation(emblem, keyframes);
-    const signal = coalitionArt.querySelector(`.coalition-signal[data-route="${emblem.dataset.route}"]`);
-    signal.style.strokeDasharray = String(length);
-    addCoalitionAnimation(signal, [
-      { strokeDashoffset: String(length), opacity: 0 },
-      { strokeDashoffset: String(length * .88), opacity: 1, offset: .12 },
-      { strokeDashoffset: "0", opacity: 1 }
-    ]);
+  }
+  return keyframes;
+}
+
+function measureJourney() {
+  journeyRoutes.forEach(route => route.animation.cancel());
+  journeyRoutes = [];
+  const root = pageBox(document.querySelector("main"));
+  const hero = pageBox(document.querySelector(".hero"));
+  const origins = pageBox(document.querySelector(".hero-clubs"));
+  const factsElement = document.querySelector(".facts");
+  const facts = pageBox(factsElement);
+  const railX = facts.x + parseFloat(getComputedStyle(factsElement).paddingLeft) / 2;
+  const compact = window.matchMedia("(max-width: 1050px)").matches;
+  const railSize = mobileLayout.matches ? 28 : 40;
+  const spacing = mobileLayout.matches ? 72 : 52;
+  const railTime = Math.max(280, facts.y - window.innerHeight * .52);
+  journeyMarks.forEach((mark, index) => {
+    const club = mark.dataset.club;
+    const origin = pageBox(document.querySelector(`.journey-origin[data-club="${club}"] img`));
+    const destination = document.querySelector(`.journey-destination[data-club="${club}"]`);
+    const target = pageBox(destination);
+    const targetX = target.x + target.width / 2;
+    const targetY = target.y + target.height / 2;
+    const endTime = Math.max(railTime + 300, targetY - window.innerHeight * .52);
+    const footY = hero.bottom - (2 * spacing + 40) + index * spacing;
+    const knots = [
+      { at: 0, x: origin.x + origin.width / 2, y: origin.y + origin.height / 2, size: origin.width },
+      { at: railTime * .2, x: origins.right - railSize / 2, y: compact ? origins.y + 16 + index * 72 : origin.y + origin.height / 2, size: railSize },
+      { at: railTime * .48, x: origins.right - railSize / 2, y: footY, size: railSize },
+      { at: railTime * .82, x: railX, y: footY, size: railSize },
+      { at: railTime, x: railX, y: facts.y + index * spacing, size: railSize },
+      { at: endTime - 192, x: railX, y: targetY - 192 + index * spacing, size: railSize },
+      { at: endTime, x: targetX, y: targetY, size: target.width }
+    ];
+    const animation = mark.animate(journeyKeyframes(knots, root), {
+      duration: 1000, fill: "both", easing: "linear"
+    });
+    animation.pause();
+    animation.currentTime = 0;
+    journeyRoutes.push({ animation, mark, destination, endTime, progress: -1 });
   });
-  addCoalitionAnimation(coalitionArt.querySelector(".coalition-pulse"), [
-    { transform: "scale(.7)", opacity: .15 },
-    { transform: "scale(1.45)", opacity: .8 }
-  ]);
-  addCoalitionAnimation(document.querySelector(".coalition-result strong"), [
-    { color: "var(--cp-text)", transform: "translateY(0)" },
-    { color: "var(--cp-accent)", transform: "translateY(-4px)" }
-  ]);
+  journeyNeedsLayout = false;
+  journey.hidden = false;
+  document.documentElement.dataset.journey = "ready";
 }
 
-function coalitionScrollProgress() {
-  const { start, end } = coalitionGeometry;
-  return Math.max(0, Math.min(1, (window.scrollY - start) / (end - start)));
+function renderJourney() {
+  journeyFrame = 0;
+  if (journeyNeedsLayout) measureJourney();
+  journeyRoutes.forEach(route => {
+    const progress = Math.max(0, Math.min(1, window.scrollY / route.endTime));
+    if (progress === route.progress) return;
+    route.animation.currentTime = progress * 1000;
+    route.mark.hidden = progress === 1;
+    route.destination.classList.toggle("is-travelling", progress < 1);
+    route.progress = progress;
+  });
 }
 
-function queueCoalitionFrame() {
-  if (!coalitionFrame && canAnimateCoalition && !reducedMotion.matches && !document.hidden) {
-    coalitionFrame = requestAnimationFrame(renderCoalition);
+function queueJourneyFrame() {
+  if (!journeyFrame && canAnimateJourney && !reducedMotion.matches && !document.hidden) {
+    journeyFrame = requestAnimationFrame(renderJourney);
   }
 }
 
-function renderCoalition(time) {
-  coalitionFrame = 0;
-  if (coalitionNeedsLayout) measureCoalition();
-  const viewportTop = coalitionGeometry.top - window.scrollY;
-  if (viewportTop + coalitionGeometry.height < 0 || viewportTop > window.innerHeight) {
-    coalitionPreview = null;
-    return;
-  }
-  let progress = coalitionScrollProgress();
-  if (coalitionPreview) {
-    const elapsed = Math.min(1, (time - coalitionPreview.start) / 1600);
-    const target = coalitionPreview.origin < .5 ? 1 : 0;
-    const travel = (1 - Math.cos(elapsed * Math.PI * 2)) / 2;
-    progress = coalitionPreview.origin + (target - coalitionPreview.origin) * travel;
-    if (elapsed < 1) queueCoalitionFrame();
-    else {
-      coalitionPreview = null;
-      progress = coalitionScrollProgress();
-    }
-  }
-  if (progress === coalitionLastProgress) return;
-  coalitionAnimations.forEach(animation => { animation.currentTime = progress * 1000; });
-  coalitionLastProgress = progress;
+function refreshJourneyLayout() {
+  journeyNeedsLayout = true;
+  queueJourneyFrame();
 }
 
-function cancelCoalitionPreview() {
-  coalitionPreview = null;
-  cancelAnimationFrame(coalitionFrame);
-  coalitionFrame = 0;
+function resetJourney() {
+  cancelAnimationFrame(journeyFrame);
+  journeyFrame = 0;
+  journeyRoutes.forEach(route => {
+    route.animation.cancel();
+    route.destination.classList.remove("is-travelling");
+  });
+  journeyRoutes = [];
+  journey.hidden = true;
+  delete document.documentElement.dataset.journey;
+  refreshJourneyLayout();
 }
 
-function refreshCoalitionLayout() {
-  cancelCoalitionPreview();
-  coalitionNeedsLayout = true;
-  queueCoalitionFrame();
-}
-
-replay.addEventListener("click", () => {
-  if (!canAnimateCoalition || reducedMotion.matches || document.hidden) return;
-  if (coalitionNeedsLayout) measureCoalition();
-  coalitionPreview = { start: performance.now(), origin: coalitionScrollProgress() };
-  queueCoalitionFrame();
-});
-window.addEventListener("scroll", () => {
-  coalitionPreview = null;
-  queueCoalitionFrame();
-}, { passive: true });
+window.addEventListener("scroll", queueJourneyFrame, { passive: true });
 document.querySelectorAll(".faq-list details").forEach((details) => {
   details.addEventListener("toggle", () => {
     if (!details.open || reducedMotion.matches || typeof Element.prototype.animate !== "function") return;
@@ -177,37 +171,34 @@ document.querySelectorAll(".faq-list details").forEach((details) => {
 });
 reducedMotion.addEventListener("change", () => {
   stopAnimations();
-  cancelCoalitionPreview();
-  coalitionAnimations.forEach(animation => animation.cancel());
-  coalitionAnimations = [];
-  replay.hidden = coalitionHint.hidden = reducedMotion.matches || !canAnimateCoalition;
-  refreshCoalitionLayout();
+  resetJourney();
 });
 document.addEventListener("visibilitychange", () => {
   if (document.hidden) {
     stopAnimations();
-    cancelCoalitionPreview();
+    cancelAnimationFrame(journeyFrame);
+    journeyFrame = 0;
   } else {
-    refreshCoalitionLayout();
+    refreshJourneyLayout();
   }
 });
 window.addEventListener("resize", () => {
   stopAnimations();
-  refreshCoalitionLayout();
+  refreshJourneyLayout();
 });
-window.addEventListener("pageshow", refreshCoalitionLayout);
+window.addEventListener("pageshow", refreshJourneyLayout);
 
 // Enable compact navigation only after its handlers are ready.
 menu.hidden = !mobileLayout.matches;
 mobileLayout.addEventListener("change", () => { menu.hidden = !mobileLayout.matches; });
 document.documentElement.setAttribute("data-js", "ready");
-replay.hidden = coalitionHint.hidden = reducedMotion.matches || !canAnimateCoalition;
 if (typeof ResizeObserver === "function") {
-  const coalitionResize = new ResizeObserver(refreshCoalitionLayout);
-  coalitionResize.observe(document.querySelector(".hero"));
-  coalitionResize.observe(document.querySelector(".site-header"));
+  const journeyResize = new ResizeObserver(refreshJourneyLayout);
+  document.querySelectorAll(".site-header, .hero, .facts, #concept, #organizers").forEach(element => {
+    journeyResize.observe(element);
+  });
 }
-queueCoalitionFrame();
+queueJourneyFrame();
 
 const heroVideo = document.querySelector(".hero-video");
 const heroPoster = document.querySelector(".hero-poster");
