@@ -17,14 +17,17 @@ Open `http://127.0.0.1:4173`. The page also works directly from `index.html`, bu
 ## Edit
 
 - `index.html`: headings, sections, FAQ, proposal status and CTA anchors.
-- `styles.css`: responsive layout and Clawpilot light/dark theme tokens. Component colors use `var(--cp-*)`.
+- `styles.css`: responsive layout and Clawpilot light-only theme tokens. Component colors use `var(--cp-*)`.
 - `script.js`: mobile navigation, SVG-path organizer choreography and FAQ feedback. The coalition sequence plays once when visible, or on explicit replay; geometry is sampled once and the Web Animations API handles playback.
 - `assets/rcvc.png`, `assets/rcig.png`, `assets/rceo.png`: latest supplied organizer logos in that exact mapping: black unicorn, charcoal/yellow arrows, and black lightbulb. Preserve their colors and proportions. Each acronym displays its full club name beneath it in parentheses.
 - `proposal.txt`: downloadable draft outline. Update alongside the website when facts are confirmed.
+- `assets/hero-background.webm`: crossfaded decorative loop derived from the supplied video. `hero-background.mp4` is the original fallback; `hero-background-poster.jpg` supplies the static treatment.
 
 Do not replace placeholders with speculative facts. Keep Dragonfruit labelled prospective until confirmed. Publish a verified organizer contact before adding a contact form or email CTA.
 
-Theme follows the browser preference. `?scoutTheme=light` and `?scoutTheme=dark` explicitly override it. Reduced-motion preference disables authored motion and smooth scrolling. Without JavaScript, content, navigation, native FAQ disclosures and downloads remain available.
+The website is permanently light-only, regardless of browser preference or theme query parameters. Reduced-motion preference disables automatic authored motion and smooth scrolling. Without JavaScript, content, navigation, native FAQ disclosures, the hero still and downloads remain available.
+
+The supplied video is blended into the full-width hero using a pale monochrome treatment and fading edges. Playback is muted and inline, with explicit pause/play controls. Sources load only when playback is requested and the hero is visible. Reduced-motion and data-saving preferences start with the still image; visitors may explicitly choose playback. Off-screen and hidden-tab playback pauses. Loading errors keep the still treatment and expose a retry control.
 
 The coalition artwork uses three SVG routes and the supplied logos. It settles back to the readable labeled layout, cancels when off-screen or hidden, and returns to the static layout on resize. It has no perpetual animation, sound, dependency, or rendering loop.
 

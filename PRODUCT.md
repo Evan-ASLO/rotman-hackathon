@@ -28,6 +28,8 @@ Unconfirmed descriptions use standard Lorem Ipsum. Date, venue, attendance, form
 - Display full club names in parentheses beneath the standalone acronyms.
 - Reference: https://events.cantutor.ai/ with airy sections, large bold sans typography, warm neutral ground, accent CTAs and thin borders.
 - Clawpilot theme variables and Segoe UI/Aptos typography.
+- Permanently light-only; no dark mode or device-theme switching.
+- Supplied video softly blended behind the hero, with muted playback, pause control and a static reduced-motion fallback.
 
 ## Evidence on Hand
 

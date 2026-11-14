@@ -6,20 +6,13 @@ STORY: Understand the proposal, meet its organizers, explore sponsorship and dow
 FIRST VIEWPORT: Large event title at left, proposal action and a three-path coalition sequence below.
 FORM: User-pinned event-page reference; no invented event metrics or confirmed partnerships.
 -->
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="only light">
   <meta name="description" content="A draft Rotman Commerce hackathon proposal from RCVC, RCIG and RCEO. Explore the concept and prospective sponsorship opportunities.">
   <title>Rotman Hackathon — Sponsorship proposal</title>
-  <script>
-    (() => {
-      const param = new URLSearchParams(window.location.search).get("scoutTheme");
-      const theme = param === "light" || param === "dark" ? param :
-        (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-      document.documentElement.setAttribute("data-theme", theme);
-    })();
-  </script>
   <link rel="icon" href="assets/rcvc.png" type="image/png">
   <link rel="stylesheet" href="styles.css">
   <script src="script.js" defer></script>
@@ -37,7 +30,15 @@ FORM: User-pinned event-page reference; no invented event metrics or confirmed p
     </nav>
   </header>
   <main id="main">
-    <section class="hero wrap" id="top" aria-labelledby="hero-title">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero-media" aria-hidden="true">
+        <img class="hero-poster hero-footage" src="assets/hero-background-poster.jpg" alt="" width="960" height="540">
+        <video class="hero-video hero-footage" id="hero-background" muted loop playsinline preload="none" poster="assets/hero-background-poster.jpg" tabindex="-1" hidden>
+          <source data-src="assets/hero-background.webm" type="video/webm">
+          <source data-src="assets/hero-background.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="wrap hero-content">
       <h1 id="hero-title">Rotman<br><span>Hackathon.</span></h1>
       <div class="hero-bottom">
         <div class="hero-copy">
@@ -70,6 +71,11 @@ FORM: User-pinned event-page reference; no invented event metrics or confirmed p
           <div class="coalition-result"><strong>Better,<br>together.</strong><span class="coalition-caption">Venture. Innovation. Entrepreneurship.</span></div>
           <button class="replay" type="button" hidden>Replay convergence <span aria-hidden="true">↺</span></button>
         </div>
+      </div>
+      <div class="hero-motion-controls">
+        <p class="hero-video-status micro" role="status" hidden></p>
+        <button class="hero-video-toggle" type="button" aria-controls="hero-background" hidden>Play background</button>
+      </div>
       </div>
     </section>
     <section class="facts wrap" aria-labelledby="facts-title">

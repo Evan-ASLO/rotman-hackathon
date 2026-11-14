@@ -131,3 +131,108 @@ if (typeof IntersectionObserver === "function") {
 } else {
   converge();
 }
+
+const heroVideo = document.querySelector(".hero-video");
+const heroPoster = document.querySelector(".hero-poster");
+const videoToggle = document.querySelector(".hero-video-toggle");
+const videoStatus = document.querySelector(".hero-video-status");
+const connection = navigator.connection;
+let wantsVideo = !reducedMotion.matches && !connection?.saveData;
+let heroVisible = true;
+let videoLoaded = false;
+let videoFailed = false;
+let playbackRequest = 0;
+const failedVideoSources = new Set();
+
+function showVideoStatus(message = "") {
+  videoStatus.textContent = message;
+  videoStatus.hidden = !message;
+}
+
+function updateVideoButton() {
+  videoToggle.textContent = videoFailed ? "Retry background video" :
+    wantsVideo ? "Pause background" : "Play background";
+}
+
+async function updateVideoPlayback() {
+  const request = ++playbackRequest;
+  updateVideoButton();
+  if (!wantsVideo || !heroVisible || document.hidden || videoFailed) {
+    heroVideo.pause();
+    return;
+  }
+  if (!videoLoaded) {
+    failedVideoSources.clear();
+    heroVideo.querySelectorAll("source").forEach(source => { source.src = source.dataset.src; });
+    heroVideo.load();
+    videoLoaded = true;
+  }
+  try {
+    await heroVideo.play();
+    if (request !== playbackRequest) return;
+    showVideoStatus();
+  } catch (error) {
+    if (request !== playbackRequest || error.name === "AbortError" || videoFailed) return;
+    wantsVideo = false;
+    showVideoStatus("Background paused. Select Play background to start.");
+    updateVideoButton();
+    console.warn("Hero background playback did not start:", error);
+  }
+}
+
+heroVideo.muted = true;
+heroVideo.addEventListener("playing", () => {
+  heroVideo.hidden = false;
+  heroPoster.hidden = true;
+});
+function showVideoFailure() {
+  if (videoFailed) return;
+  videoFailed = true;
+  ++playbackRequest;
+  heroVideo.pause();
+  heroVideo.hidden = true;
+  heroPoster.hidden = false;
+  showVideoStatus("Background video unavailable. Showing a still image.");
+  updateVideoButton();
+  console.warn("Hero background video could not load:", heroVideo.error);
+}
+heroVideo.addEventListener("error", showVideoFailure);
+const videoSources = [...heroVideo.querySelectorAll("source")];
+videoSources.forEach(source => {
+  source.addEventListener("error", () => {
+    failedVideoSources.add(source);
+    if (failedVideoSources.size === videoSources.length) showVideoFailure();
+  });
+});
+videoToggle.addEventListener("click", () => {
+  if (videoFailed) {
+    videoFailed = false;
+    videoLoaded = false;
+    wantsVideo = true;
+  } else {
+    wantsVideo = !wantsVideo;
+  }
+  showVideoStatus();
+  updateVideoPlayback();
+});
+reducedMotion.addEventListener("change", () => {
+  wantsVideo = !reducedMotion.matches && !connection?.saveData;
+  updateVideoPlayback();
+});
+connection?.addEventListener("change", () => {
+  if (connection.saveData) {
+    wantsVideo = false;
+    updateVideoPlayback();
+  }
+});
+document.addEventListener("visibilitychange", updateVideoPlayback);
+videoToggle.hidden = false;
+if (typeof IntersectionObserver === "function") {
+  const heroObserver = new IntersectionObserver(([entry]) => {
+    heroVisible = entry.isIntersecting;
+    updateVideoPlayback();
+  });
+  heroObserver.observe(document.querySelector(".hero"));
+} else {
+  updateVideoPlayback();
+}
