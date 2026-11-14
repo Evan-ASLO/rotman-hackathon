@@ -91,6 +91,7 @@ p { line-height: 1.7; }
 .coalition-result { margin-top: 24px; }
 .coalition-result strong { display: block; font-size: clamp(44px, 4.6vw, 64px); line-height: 1; letter-spacing: -.04em; margin: 12px 0; }
 .coalition-caption { font-size: 14px; color: var(--cp-text-muted); }
+.coalition-scroll-hint { margin: 20px 0 0; color: var(--cp-text-muted); font-size: 12px; line-height: 1.6; }
 .replay { border: 0; background: var(--cp-bg); color: var(--cp-text-soft); padding: 12px 0; font: 12px Consolas, "Courier New", Courier, monospace; text-decoration: underline; text-underline-offset: 4px; margin-top: 4px; min-height: 44px; }
 .facts { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--cp-border-strong); border-bottom: 1px solid var(--cp-border); padding-block: 28px; }
 .facts > div { padding-left: 28px; border-left: 1px solid var(--cp-border); }

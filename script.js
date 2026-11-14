@@ -41,23 +41,45 @@ function stopAnimations() {
   activeAnimations = [];
 }
 
-function converge() {
-  stopAnimations();
-  if (reducedMotion.matches || typeof Element.prototype.animate !== "function" || document.hidden) return;
-  const { width, height } = coalitionArt.getBoundingClientRect();
+const coalitionHint = document.querySelector(".coalition-scroll-hint");
+const canAnimateCoalition = typeof Element.prototype.animate === "function";
+let coalitionAnimations = [];
+let coalitionFrame = 0;
+let coalitionNeedsLayout = true;
+let coalitionGeometry;
+let coalitionPreview = null;
+let coalitionLastProgress = -1;
+
+function addCoalitionAnimation(element, keyframes) {
+  const animation = element.animate(keyframes, { duration: 1000, fill: "both", easing: "linear" });
+  animation.pause();
+  animation.currentTime = 0;
+  coalitionAnimations.push(animation);
+}
+
+function measureCoalition() {
+  coalitionAnimations.forEach(animation => animation.cancel());
+  coalitionAnimations = [];
+  coalitionLastProgress = -1;
+  const { top, width, height } = coalitionArt.getBoundingClientRect();
+  const pageTop = top + window.scrollY;
+  const start = Math.max(0, pageTop - window.innerHeight * .75);
+  coalitionGeometry = {
+    top: pageTop, height, start,
+    end: Math.max(start + 160, pageTop - window.innerHeight * .2)
+  };
+  coalitionNeedsLayout = false;
   if (width === 0 || height === 0) return;
   const emblems = [...coalitionArt.querySelectorAll(".coalition-emblem")];
-  const result = document.querySelector(".coalition-result");
-  emblems.forEach((emblem, index) => {
+  emblems.forEach(emblem => {
     const route = document.getElementById(emblem.dataset.route);
     const length = route.getTotalLength();
     const start = route.getPointAtLength(0);
     const keyframes = [];
-    // Sample the drawn route once; the browser plays the motion without a frame loop.
+    // Sample only on layout changes; scrolling seeks the paused browser animations.
     for (let step = 0; step <= 32; step++) {
       const progress = step / 32;
-      const inward = progress <= .5 ? progress * 2 : (1 - progress) * 2;
-      const eased = (1 - Math.cos(inward * Math.PI)) / 2;
+      const eased = (1 - Math.cos(progress * Math.PI)) / 2;
       const point = route.getPointAtLength(length * .6 * eased);
       const dx = (point.x - start.x) * width / 600;
       const dy = (point.y - start.y) * height / 190;
@@ -67,31 +89,83 @@ function converge() {
         transform: `translate(-50%, -50%) translate(${dx}px, ${dy}px) scale(${scale})`
       });
     }
-    trackAnimation(emblem.animate(keyframes, {
-      duration: 1600, delay: index * 60, easing: "linear"
-    }));
+    addCoalitionAnimation(emblem, keyframes);
     const signal = coalitionArt.querySelector(`.coalition-signal[data-route="${emblem.dataset.route}"]`);
     signal.style.strokeDasharray = String(length);
-    trackAnimation(signal.animate([
+    addCoalitionAnimation(signal, [
       { strokeDashoffset: String(length), opacity: 0 },
-      { strokeDashoffset: String(length), opacity: 1, offset: .05 },
-      { strokeDashoffset: "0", opacity: 1, offset: .45 },
-      { strokeDashoffset: "0", opacity: 1, offset: .7 },
-      { strokeDashoffset: "0", opacity: 0 }
-    ], { duration: 1600, delay: index * 60, easing: "linear" }));
+      { strokeDashoffset: String(length * .88), opacity: 1, offset: .12 },
+      { strokeDashoffset: "0", opacity: 1 }
+    ]);
   });
-  trackAnimation(coalitionArt.querySelector(".coalition-pulse").animate([
-    { transform: "scale(.7)", opacity: 0 },
-    { transform: "scale(1.1)", opacity: .8, offset: .25 },
-    { transform: "scale(2.4)", opacity: 0 }
-  ], { duration: 800, delay: 600, easing: "linear" }));
-  trackAnimation(result.animate([
-    { clipPath: "inset(0 0 70% 0)", opacity: .5 },
-    { clipPath: "inset(0 0 0 0)", opacity: 1 }
-  ], { duration: 650, delay: 700, fill: "backwards", easing: "cubic-bezier(.16,1,.3,1)" }));
+  addCoalitionAnimation(coalitionArt.querySelector(".coalition-pulse"), [
+    { transform: "scale(.7)", opacity: .15 },
+    { transform: "scale(1.45)", opacity: .8 }
+  ]);
+  addCoalitionAnimation(document.querySelector(".coalition-result strong"), [
+    { color: "var(--cp-text)", transform: "translateY(0)" },
+    { color: "var(--cp-accent)", transform: "translateY(-4px)" }
+  ]);
 }
 
-replay.addEventListener("click", converge);
+function coalitionScrollProgress() {
+  const { start, end } = coalitionGeometry;
+  return Math.max(0, Math.min(1, (window.scrollY - start) / (end - start)));
+}
+
+function queueCoalitionFrame() {
+  if (!coalitionFrame && canAnimateCoalition && !reducedMotion.matches && !document.hidden) {
+    coalitionFrame = requestAnimationFrame(renderCoalition);
+  }
+}
+
+function renderCoalition(time) {
+  coalitionFrame = 0;
+  if (coalitionNeedsLayout) measureCoalition();
+  const viewportTop = coalitionGeometry.top - window.scrollY;
+  if (viewportTop + coalitionGeometry.height < 0 || viewportTop > window.innerHeight) {
+    coalitionPreview = null;
+    return;
+  }
+  let progress = coalitionScrollProgress();
+  if (coalitionPreview) {
+    const elapsed = Math.min(1, (time - coalitionPreview.start) / 1600);
+    const target = coalitionPreview.origin < .5 ? 1 : 0;
+    const travel = (1 - Math.cos(elapsed * Math.PI * 2)) / 2;
+    progress = coalitionPreview.origin + (target - coalitionPreview.origin) * travel;
+    if (elapsed < 1) queueCoalitionFrame();
+    else {
+      coalitionPreview = null;
+      progress = coalitionScrollProgress();
+    }
+  }
+  if (progress === coalitionLastProgress) return;
+  coalitionAnimations.forEach(animation => { animation.currentTime = progress * 1000; });
+  coalitionLastProgress = progress;
+}
+
+function cancelCoalitionPreview() {
+  coalitionPreview = null;
+  cancelAnimationFrame(coalitionFrame);
+  coalitionFrame = 0;
+}
+
+function refreshCoalitionLayout() {
+  cancelCoalitionPreview();
+  coalitionNeedsLayout = true;
+  queueCoalitionFrame();
+}
+
+replay.addEventListener("click", () => {
+  if (!canAnimateCoalition || reducedMotion.matches || document.hidden) return;
+  if (coalitionNeedsLayout) measureCoalition();
+  coalitionPreview = { start: performance.now(), origin: coalitionScrollProgress() };
+  queueCoalitionFrame();
+});
+window.addEventListener("scroll", () => {
+  coalitionPreview = null;
+  queueCoalitionFrame();
+}, { passive: true });
 document.querySelectorAll(".faq-list details").forEach((details) => {
   details.addEventListener("toggle", () => {
     if (!details.open || reducedMotion.matches || typeof Element.prototype.animate !== "function") return;
@@ -103,34 +177,37 @@ document.querySelectorAll(".faq-list details").forEach((details) => {
 });
 reducedMotion.addEventListener("change", () => {
   stopAnimations();
-  replay.hidden = reducedMotion.matches || typeof Element.prototype.animate !== "function";
+  cancelCoalitionPreview();
+  coalitionAnimations.forEach(animation => animation.cancel());
+  coalitionAnimations = [];
+  replay.hidden = coalitionHint.hidden = reducedMotion.matches || !canAnimateCoalition;
+  refreshCoalitionLayout();
 });
 document.addEventListener("visibilitychange", () => {
-  if (document.hidden) stopAnimations();
+  if (document.hidden) {
+    stopAnimations();
+    cancelCoalitionPreview();
+  } else {
+    refreshCoalitionLayout();
+  }
 });
-window.addEventListener("resize", stopAnimations);
+window.addEventListener("resize", () => {
+  stopAnimations();
+  refreshCoalitionLayout();
+});
+window.addEventListener("pageshow", refreshCoalitionLayout);
 
 // Enable compact navigation only after its handlers are ready.
 menu.hidden = !mobileLayout.matches;
 mobileLayout.addEventListener("change", () => { menu.hidden = !mobileLayout.matches; });
 document.documentElement.setAttribute("data-js", "ready");
-replay.hidden = reducedMotion.matches || typeof Element.prototype.animate !== "function";
-if (typeof IntersectionObserver === "function") {
-  let played = false;
-  const observer = new IntersectionObserver(entries => {
-    for (const entry of entries) {
-      if (entry.isIntersecting && !played) {
-        played = true;
-        converge();
-      } else if (!entry.isIntersecting) {
-        stopAnimations();
-      }
-    }
-  }, { threshold: .4 });
-  observer.observe(coalitionArt);
-} else {
-  converge();
+replay.hidden = coalitionHint.hidden = reducedMotion.matches || !canAnimateCoalition;
+if (typeof ResizeObserver === "function") {
+  const coalitionResize = new ResizeObserver(refreshCoalitionLayout);
+  coalitionResize.observe(document.querySelector(".hero"));
+  coalitionResize.observe(document.querySelector(".site-header"));
 }
+queueCoalitionFrame();
 
 const heroVideo = document.querySelector(".hero-video");
 const heroPoster = document.querySelector(".hero-poster");
